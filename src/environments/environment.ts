@@ -1,4 +1,1 @@
-export const environment = {
-  name: 'sample',
-  production: false,
-};
+export const environment = {};
