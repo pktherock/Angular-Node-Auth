@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)", 
-      "destination": "https://your-api-domain.com/api/" 
+      "destination": "https://authentication-backend-app.vercel.app/api" 
     }
   ]
 }
