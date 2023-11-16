@@ -5,9 +5,7 @@
     <mat-card-content>
       <form [formGroup]="loginForm" (ngSubmit)="onLoginBtnClick()">
         <mat-form-field appearance="outline">
-          <button mat-icon-button matPrefix type="button" color="primary">
-            <mat-icon>email</mat-icon>
-          </button>
+          <mat-icon matPrefix color="primary">email</mat-icon>
           <mat-label>Email</mat-label>
           <input
             type="email"
@@ -29,18 +27,9 @@
             [type]="hidePassword ? 'password' : 'text'"
             required
           />
-          <button
-            mat-icon-button
-            matSuffix
-            type="button"
-            (click)="hidePassword = !hidePassword"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hidePassword"
-          >
-            <mat-icon>{{
-              hidePassword ? "visibility" : "visibility_off"
-            }}</mat-icon>
-          </button>
+          <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
         </mat-form-field>
 
         <div class="buttons">

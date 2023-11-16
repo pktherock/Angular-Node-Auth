@@ -15,18 +15,10 @@
             [type]="hidePassword ? 'password' : 'text'"
             required
           />
-          <button
-            mat-icon-button
-            matSuffix
-            type="button"
-            (click)="hidePassword = !hidePassword"
-            [attr.aria-label]="'Hide password'"
-            [attr.aria-pressed]="hidePassword"
-          >
-            <mat-icon>{{
-              hidePassword ? "visibility" : "visibility_off"
-            }}</mat-icon>
-          </button>
+
+          <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{
+            hidePassword ? "visibility_off" : "visibility"
+          }}</mat-icon>
         </mat-form-field>
 
         <div class="button">
