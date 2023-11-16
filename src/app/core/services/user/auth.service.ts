@@ -1,7 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { lastValueFrom, firstValueFrom } from 'rxjs';
 
 import { Router } from '@angular/router';
+
+import ApiResponse from 'src/app/utils/ApiResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +17,7 @@ export class AuthService {
 
   // this function will run before application starts and ready to use
   Init() {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<void>((resolve) => {
       resolve(); // todo
     });
   }
@@ -24,25 +27,21 @@ export class AuthService {
   }
 
   // Function to signup with email and password
-  async signUpWithEmailAndPassword(
-    userName: string,
-    email: string,
-    password: string
-  ) {
-    console.log('Info', userName, email, password);
-    return new Promise((resolve, reject) => {
-      this.http
-        .post('/api/v1/auth/register', { userName, email, password })
-        .subscribe({
-          next: (value) => {
-            console.log(value);
-            resolve({ success: true, data: 'todo' });
-          },
-          error: (err) => {
-            console.log(err);
-          },
-        });
-    });
+  async signUp(userName: string, email: string, password: string) {
+    try {
+      const response = await lastValueFrom(
+        this.http.post<ApiResponse>('/api/v1/auth/register', {
+          userName,
+          email,
+          password,
+        })
+      );
+      // console.log(response);
+      return response
+    } catch (error: any) {
+        console.log('HTTP Error:', error);
+        return error.message;
+    }
   }
 
   // Function to login with email and password

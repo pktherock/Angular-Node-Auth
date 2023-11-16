@@ -35,11 +35,7 @@ export class SignUpComponent implements OnInit {
     const { userName, email, password, confirmNewPassword } =
       this.signUpForm.value;
     if (password === confirmNewPassword && email && userName) {
-      const response = await this.authService.signUpWithEmailAndPassword(
-        userName,
-        email,
-        password
-      );
+      const response = await this.authService.signUp(userName, email, password);
 
       console.log(response);
       // todo

@@ -4,11 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { MaterialModule } from './modules/material/material.module';
 import { AuthService } from './core/services/user/auth.service';
 import { SharedModule } from './shared/shared.module';
+import { ErrorInterceptor } from './core/interceptors/error/error.interceptor';
 
 function initializeAppAuth(authService: AuthService) {
   return (): Promise<any> => {
@@ -34,6 +35,11 @@ function initializeAppAuth(authService: AuthService) {
       deps: [AuthService],
       multi: true,
     },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
 })
