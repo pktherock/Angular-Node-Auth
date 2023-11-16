@@ -24,6 +24,7 @@ export class SignUpComponent implements OnInit {
       this.router.navigate(['dashboard']);
     }
     this.signUpForm = new FormGroup({
+      userName: new FormControl(''),
       email: new FormControl(''),
       password: new FormControl(''),
       confirmNewPassword: new FormControl(''),
@@ -31,23 +32,17 @@ export class SignUpComponent implements OnInit {
   }
 
   async onSignUpBtnClick() {
-    const { email, password, confirmNewPassword } = this.signUpForm.value;
-    if (password === confirmNewPassword && email) {
+    const { userName, email, password, confirmNewPassword } =
+      this.signUpForm.value;
+    if (password === confirmNewPassword && email && userName) {
       const response = await this.authService.signUpWithEmailAndPassword(
+        userName,
         email,
         password
       );
 
-      if (response.success) {
-        console.log(response.data);
-        this.router.navigate(['dashboard']);
-      } else {
-        console.log(response.error);
-
-        this.alertService.error(
-          `Email or password must be correct ${response.error}`
-        );
-      }
+      console.log(response);
+      // todo
     }
   }
 }

@@ -6,6 +6,19 @@
       <form [formGroup]="signUpForm" (ngSubmit)="onSignUpBtnClick()">
         <mat-form-field appearance="outline">
           <button mat-icon-button matPrefix type="button" color="primary">
+            <mat-icon>person</mat-icon>
+          </button>
+          <mat-label>User Name</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="userName"
+            placeholder="Please enter user name"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <button mat-icon-button matPrefix type="button" color="primary">
             <mat-icon>email</mat-icon>
           </button>
           <mat-label>Email</mat-label>

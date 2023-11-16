@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Router } from '@angular/router';
@@ -9,7 +10,7 @@ export class AuthService {
   loggedInUserId!: string;
   userEmailId!: string;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private http: HttpClient) {}
 
   // this function will run before application starts and ready to use
   Init() {
@@ -23,15 +24,25 @@ export class AuthService {
   }
 
   // Function to signup with email and password
-  async signUpWithEmailAndPassword(email: string, password: string) {
-    console.log('Email', email);
-    console.log('Password', password);
-    try {
-      // todo
-      return { success: true, data: 'todo' };
-    } catch (err: any) {
-      return { success: false, error: err.code };
-    }
+  async signUpWithEmailAndPassword(
+    userName: string,
+    email: string,
+    password: string
+  ) {
+    console.log('Info', userName, email, password);
+    return new Promise((resolve, reject) => {
+      this.http
+        .post('/api/v1/auth/register', { userName, email, password })
+        .subscribe({
+          next: (value) => {
+            console.log(value);
+            resolve({ success: true, data: 'todo' });
+          },
+          error: (err) => {
+            console.log(err);
+          },
+        });
+    });
   }
 
   // Function to login with email and password

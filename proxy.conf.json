@@ -1,6 +1,7 @@
 {
   "/api": {
     "target": "https://authentication-backend-app.vercel.app",
-    "secure": false
+    "secure": false,
+    "changeOrigin": true
   }
 }

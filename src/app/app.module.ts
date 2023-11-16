@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MaterialModule } from './modules/material/material.module';
 import { AuthService } from './core/services/user/auth.service';
@@ -24,6 +25,7 @@ function initializeAppAuth(authService: AuthService) {
     ReactiveFormsModule,
     MaterialModule,
     SharedModule,
+    HttpClientModule,
   ],
   providers: [
     {
