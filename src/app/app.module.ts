@@ -10,6 +10,10 @@ import { MaterialModule } from './modules/material/material.module';
 import { AuthService } from './core/services/user/auth.service';
 import { SharedModule } from './shared/shared.module';
 import { ErrorInterceptor } from './core/interceptors/error/error.interceptor';
+import { FooterComponent } from './layout/footer/footer.component';
+import { HeaderComponent } from './layout/header/header.component';
+import { PrivateLayoutComponent } from './layout/private-layout/private-layout.component';
+import { PublicLayoutComponent } from './layout/public-layout/public-layout.component';
 
 function initializeAppAuth(authService: AuthService) {
   return (): Promise<any> => {
@@ -18,7 +22,13 @@ function initializeAppAuth(authService: AuthService) {
 }
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent,
+    FooterComponent,
+    HeaderComponent,
+    PrivateLayoutComponent,
+    PublicLayoutComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -38,8 +48,8 @@ function initializeAppAuth(authService: AuthService) {
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorInterceptor,
-      multi: true
-    }
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })

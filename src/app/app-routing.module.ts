@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 import { NotFoundComponent } from './shared/components/not-found/not-found.component';
+import { PublicLayoutComponent } from './layout/public-layout/public-layout.component';
+import { PrivateLayoutComponent } from './layout/private-layout/private-layout.component';
 
 const routes: Routes = [
   {
@@ -12,15 +14,27 @@ const routes: Routes = [
 
   {
     path: 'auth',
-    loadChildren: () =>
-      import('./features/auth/auth.module').then((m) => m.AuthModule),
+    component: PublicLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./features/auth/auth.module').then((m) => m.AuthModule),
+      },
+    ],
   },
 
   {
     path: 'dashboard',
-    loadChildren: () =>
-      import('./features/home/home.module').then((m) => m.HomeModule),
-    canActivate: [AuthGuard],
+    component: PrivateLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./features/home/home.module').then((m) => m.HomeModule),
+        canActivate: [AuthGuard],
+      },
+    ],
   },
 
   {
