@@ -10,22 +10,26 @@ import { UpdateEmailComponent } from './components/update-email/update-email.com
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
+import { VerifyUserComponent } from './components/verify-user/verify-user.component';
+import { SharedModule } from "../../shared/shared.module";
 
 
 @NgModule({
-  declarations: [
-    LoginComponent,
-    SignUpComponent,
-    UpdateEmailComponent,
-    ForgotPasswordComponent,
-    UpdatePasswordComponent,
-    DeleteUserComponent,
-  ],
-  imports: [
-    CommonModule,
-    AuthRoutingModule,
-    MaterialModule,
-    ReactiveFormsModule
-  ]
+    declarations: [
+        LoginComponent,
+        SignUpComponent,
+        UpdateEmailComponent,
+        ForgotPasswordComponent,
+        UpdatePasswordComponent,
+        DeleteUserComponent,
+        VerifyUserComponent,
+    ],
+    imports: [
+        CommonModule,
+        AuthRoutingModule,
+        MaterialModule,
+        ReactiveFormsModule,
+        SharedModule
+    ]
 })
 export class AuthModule { }

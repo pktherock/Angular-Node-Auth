@@ -39,6 +39,10 @@ export class SignUpComponent implements OnInit {
 
       console.log(response);
       // todo
+    } else {
+      this.alertService.error(
+        'username, email is required, and password and confirm password should match!'
+      );
     }
   }
 }

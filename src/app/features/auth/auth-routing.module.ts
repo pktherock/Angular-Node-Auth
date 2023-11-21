@@ -7,6 +7,7 @@ import { AuthGuard } from 'src/app/core/guards/auth.guard';
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
+import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'register',
     component: SignUpComponent,
+  },
+  {
+    path: 'verify-user',
+    component: VerifyUserComponent,
   },
   {
     path: 'forgot-password',

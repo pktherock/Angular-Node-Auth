@@ -1,6 +1,5 @@
-<div class="login-container">
-  <h1>Authentication using Angular and Firebase</h1>
-  <mat-card class="login-card">
+<app-container>
+  <app-card>
     <mat-card-title>Sign Up</mat-card-title>
     <mat-card-content>
       <form [formGroup]="signUpForm" (ngSubmit)="onSignUpBtnClick()">
@@ -78,5 +77,5 @@
     <div class="link-container">
       <a routerLink="/auth/forgot-password">Forgot password?</a>
     </div>
-  </mat-card>
-</div>
+  </app-card>
+</app-container>
