@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     if (this.authService.isUserLoggedIn) {
       this.router.navigate(['dashboard']);
+      return;
     }
     this.loginForm = new FormGroup({
       email: new FormControl(''),
@@ -36,11 +37,11 @@ export class LoginComponent implements OnInit {
         email,
         password
       );
-      if (res.success) {
-        console.log('Successfully Logged In');
+      if (typeof res === "object") {
+        this.alertService.success('Successfully Logged In');
         this.router.navigate(['dashboard']);
       } else {
-        if (res.error === 'auth/too-many-requests') {
+        if (res === 'auth/too-many-requests') {
           this.alertService.error(
             'To many incorrect attempts, please try again after some time.'
           );

@@ -9,11 +9,14 @@ import { AuthService } from 'src/app/core/services/user/auth.service';
 })
 export class DashboardComponent implements OnInit {
   userEmail!: string;
-  constructor(private authService: AuthService, private router: Router) {}
-
-  ngOnInit(): void {
-    this.userEmail = this.authService.userEmailId;
+  constructor(private authService: AuthService, private router: Router) {
+    const userInfo = this.authService.userInfo?.userInfo;
+    if (userInfo) {
+      this.userEmail = userInfo?.email;
+    }
   }
+
+  ngOnInit(): void {}
 
   onLogOutBtnClick() {
     this.authService.logOut();

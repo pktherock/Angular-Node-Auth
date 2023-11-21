@@ -1,29 +1,70 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { lastValueFrom, firstValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 
 import { Router } from '@angular/router';
 
 import ApiResponse from 'src/app/utils/ApiResponse';
 
+type User = {
+  accessToken: string;
+  refreshToken: string;
+  userInfo: {
+    userName: string;
+    email: string;
+    gender?: string;
+    avatar?: {
+      url: string;
+      localPath: string;
+    };
+    lastLoggedInAt: string;
+    role: string;
+    passwordUpdatedAt?: string;
+    disable: string;
+    verified: string;
+    phoneNumber?: string;
+    dateOfBirth?: string;
+  };
+};
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  loggedInUserId!: string;
-  userEmailId!: string;
+  userInfo: User | null;
+  // todo observable
 
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) {
+    this.userInfo = null;
+  }
 
   // this function will run before application starts and ready to use
   Init() {
-    return new Promise<void>((resolve) => {
-      resolve(); // todo
+    return new Promise<void>(async (resolve, reject) => {
+      // api call to get user info
+      const userInfo = await this.getLoggedInfo();
+      if (typeof userInfo === 'object') {
+        this.userInfo = userInfo;
+      }
+      resolve();
     });
   }
 
+  async getLoggedInfo() {
+    try {
+      const response = await lastValueFrom(
+        this.http.get<ApiResponse>('/api/v1/auth/validate-session')
+      );
+      // console.log(response);
+      return response.data as User;
+    } catch (error: any) {
+      console.log('HTTP Error:', error);
+      return error.message as string;
+    }
+  }
+
   get isUserLoggedIn() {
-    return false; // todo
+    return this.userInfo !== null; // todo
   }
 
   // Function to signup with email and password
@@ -37,24 +78,27 @@ export class AuthService {
         })
       );
       // console.log(response);
-      return response
+      return response;
     } catch (error: any) {
-        console.log('HTTP Error:', error);
-        return error.message;
+      console.log('HTTP Error:', error);
+      return error.message;
     }
   }
 
   // Function to login with email and password
   async logInWithEmailAndPassword(email: string, password: string) {
-    console.log('Email', email);
-    console.log('Password', password);
     try {
-      // todo
-      return { success: true };
-    } catch (err: any) {
-      //todo auth/user-not-found
-      console.log(err.code);
-      return { success: false, error: err.code };
+      const response = await lastValueFrom(
+        this.http.post<ApiResponse>('/api/v1/auth/login', {
+          email,
+          password,
+        })
+      );
+      this.userInfo = response.data as User;
+      return response;
+    } catch (error: any) {
+      console.log('HTTP Error:', error);
+      return error.message as string;
     }
   }
 
@@ -132,7 +176,6 @@ export class AuthService {
 
   async logOut() {
     // todo
-    this.loggedInUserId = '';
     this.router.navigate(['']);
   }
 }
