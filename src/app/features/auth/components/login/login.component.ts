@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         this.alertService.success('Successfully Logged In');
         this.router.navigate(['dashboard']);
       } else {
-        if (res === 'auth/too-many-requests') {
+        if (res === 'auth/too-many-requests') { // todo
           this.alertService.error(
             'To many incorrect attempts, please try again after some time.'
           );

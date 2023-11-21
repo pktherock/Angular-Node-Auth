@@ -24,7 +24,7 @@ export class ErrorInterceptor implements HttpInterceptor {
         // Handle specific error codes or different types of errors here
         if (error.status === 401) {
           // Unauthorized - redirect to login or perform related actions
-          this.router.navigate(['/auth/login']);
+          // this.router.navigate(['/auth/login']);
         } else if (error.status === 404) {
           // Not Found - handle accordingly
         } else {
