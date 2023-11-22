@@ -9,6 +9,7 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 import { SetPasswordComponent } from './components/set-password/set-password.component';
+import { ChangeEmailComponent } from './components/change-email/change-email.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
     path: 'update-email',
     component: UpdateEmailComponent,
     canActivate: [AuthGuard],
+  },
+  {
+    path: 'change-email',
+    component: ChangeEmailComponent,
   },
   {
     path: 'update-password',

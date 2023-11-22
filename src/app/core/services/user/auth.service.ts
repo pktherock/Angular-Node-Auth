@@ -148,6 +148,23 @@ export class AuthService {
     }
   }
 
+  async changeEmail(token: string, userId: string) {
+    try {
+      const response = await lastValueFrom(
+        this.http.post<ApiResponse>('/api/v1/auth/change-email', {
+          token,
+          userId,
+        })
+      );
+      console.log(response);
+      this.userInfo = null;
+      return response.data;
+    } catch (error: any) {
+      console.log('HTTP Error:', error);
+      return error.message as string;
+    }
+  }
+
   async updatePassword(
     currentPassword: string,
     updatedPassword: string

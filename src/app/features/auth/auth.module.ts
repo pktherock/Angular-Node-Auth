@@ -13,6 +13,7 @@ import { DeleteUserComponent } from './components/delete-user/delete-user.compon
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
 import { SharedModule } from "../../shared/shared.module";
 import { SetPasswordComponent } from './components/set-password/set-password.component';
+import { ChangeEmailComponent } from './components/change-email/change-email.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { SetPasswordComponent } from './components/set-password/set-password.com
         DeleteUserComponent,
         VerifyUserComponent,
         SetPasswordComponent,
+        ChangeEmailComponent,
     ],
     imports: [
         CommonModule,

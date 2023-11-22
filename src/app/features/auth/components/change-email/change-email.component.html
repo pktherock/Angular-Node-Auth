@@ -1,0 +1,13 @@
+<app-container>
+  <app-card>
+    <p *ngIf="loading">Loading</p>
+
+    <div *ngIf="!loading">
+      <p *ngIf="emailChanged">email has been changed to new email id</p>
+      <p *ngIf="!emailChanged">Invalid or expired token</p>
+      <button mat-raised-button color="primary" routerLink="/auth/login">
+        Login
+      </button>
+    </div>
+  </app-card>
+</app-container>
