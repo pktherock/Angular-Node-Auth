@@ -86,7 +86,6 @@ export class AuthService {
   }
 
   async getUserVerificationStatus(userId: string) {
-    
     try {
       const response = await lastValueFrom(
         this.http.get<ApiResponse>(`/api/v1/auth/verify-user/${userId}`)
@@ -118,7 +117,7 @@ export class AuthService {
 
   async verifyAccount(token: string, userId: string) {
     console.log(userId, token);
-    
+
     try {
       const response = await lastValueFrom(
         this.http.post<ApiResponse>(`/api/v1/auth/verify-user/${userId}`, {
@@ -206,7 +205,16 @@ export class AuthService {
   }
 
   async logOut() {
-    // todo
-    this.router.navigate(['']);
+    try {
+      const response = await lastValueFrom(
+        this.http.post('/api/v1/auth/logout', {}) // todo without body send post request
+      );
+      this.userInfo = null;
+      console.log(response);
+      return response;
+    } catch (error: any) {
+      console.log('HTTP Error:', error);
+      return error.message as string;
+    }
   }
 }

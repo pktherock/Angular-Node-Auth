@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/core/services/alert/alert.service';
 import { AuthService } from 'src/app/core/services/user/auth.service';
 
 @Component({
@@ -9,7 +10,11 @@ import { AuthService } from 'src/app/core/services/user/auth.service';
 })
 export class DashboardComponent implements OnInit {
   userEmail!: string;
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertService: AlertService
+  ) {
     const userInfo = this.authService.userInfo?.userInfo;
     if (userInfo) {
       this.userEmail = userInfo?.email;
@@ -18,7 +23,11 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onLogOutBtnClick() {
-    this.authService.logOut();
+  async onLogOutBtnClick() {
+    const response = await this.authService.logOut();
+    if (typeof response === 'object') {
+      this.router.navigate(['']);
+      this.alertService.success('Logged Out successfully.');
+    }
   }
 }
