@@ -165,16 +165,19 @@ export class AuthService {
     }
   }
 
-  async updatePassword(
-    currentPassword: string,
-    updatedPassword: string
-  ): Promise<{ success: boolean; error?: string }> {
+  async updatePassword(password: string, newPassword: string) {
     try {
-      //  todo
-      return { success: true };
+      const response = await lastValueFrom(
+        this.http.post<ApiResponse>('/api/v1/auth/change-password', {
+          password,
+          newPassword,
+        })
+      );
+      console.log(response);
+      return response.data;
     } catch (error: any) {
-      console.log(error);
-      return { success: false, error: error.code };
+      console.log('HTTP Error:', error);
+      return error.message as string;
     }
   }
 

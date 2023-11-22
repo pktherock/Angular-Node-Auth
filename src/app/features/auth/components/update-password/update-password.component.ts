@@ -36,30 +36,9 @@ export class UpdatePasswordComponent implements OnInit {
         oldPassword,
         newPassword
       );
-      if (res.success) {
+      if (typeof res === 'object') {
         this.router.navigate(['dashboard']);
         this.alertService.success('Password updated successfully');
-      }
-
-      switch (res.error) {
-        case 'auth/requires-recent-login':
-          await this.authService.logOut();
-          this.router.navigate(['']);
-          break;
-        case 'auth/wrong-password':
-          this.alertService.error('Password is not correct!!');
-          break;
-        case 'auth/too-many-requests':
-          this.alertService.error(
-            'To many incorrect attempts, please try after some time, or reset password to to restore!'
-          );
-          break;
-        case 'auth/user-mismatch':
-          this.router.navigate(['']);
-          break;
-        default:
-          console.log(res.error);
-          break;
       }
     } else {
       this.alertService.error("password dose'nt match");
