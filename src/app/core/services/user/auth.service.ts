@@ -132,36 +132,19 @@ export class AuthService {
     }
   }
 
-  private async reAuthenticate(currentPassword: string) {
-    // todo
-  }
-
   // * This function will send verification link to the new email id if clicked and verified the automatically email will update
-  async verifyAndUpdateEmail(
-    newEmail: string,
-    currentPassword: string
-  ): Promise<{ success: boolean; error?: string }> {
+  async verifyAndUpdateEmail(newEmail: string) {
     try {
-      //  todo
-      return { success: true };
+      const response = await lastValueFrom(
+        this.http.post<ApiResponse>('/api/v1/auth/change-email-request', {
+          email: newEmail,
+        })
+      );
+      console.log(response);
+      return response.data;
     } catch (error: any) {
-      console.log(error);
-      return { success: false, error: error.code };
-    }
-  }
-
-  // * This function will update email immediately
-  async updateEmail(
-    newEmail: string,
-    currentPassword: string
-  ): Promise<{ success: boolean; error?: string }> {
-    try {
-      await this.reAuthenticate(currentPassword);
-      //  todo
-      return { success: true };
-    } catch (error: any) {
-      console.log(error);
-      return { success: false, error: error.code };
+      console.log('HTTP Error:', error);
+      return error.message as string;
     }
   }
 
@@ -170,7 +153,6 @@ export class AuthService {
     updatedPassword: string
   ): Promise<{ success: boolean; error?: string }> {
     try {
-      await this.reAuthenticate(currentPassword);
       //  todo
       return { success: true };
     } catch (error: any) {
@@ -237,7 +219,6 @@ export class AuthService {
     currentPassword: string
   ): Promise<{ success: boolean; error?: string }> {
     try {
-      await this.reAuthenticate(currentPassword);
       // todo
       return { success: true };
     } catch (error: any) {

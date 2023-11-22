@@ -22,33 +22,19 @@ export class UpdateEmailComponent implements OnInit {
   ngOnInit(): void {
     this.updateEmailForm = new FormGroup({
       email: new FormControl(''),
-      password: new FormControl(''),
     });
   }
 
   async onUpdateEmailBtnClick() {
-    const { email, password } = this.updateEmailForm.value;
-    if (email && password) {
-      const res = await this.authService.updateEmail(email, password);
+    const { email } = this.updateEmailForm.value;
+    if (email) {
+      const res = await this.authService.verifyAndUpdateEmail(email);
       console.log(res);
-      if (res.success) {
+      if (typeof res === 'object') {
+        this.alertService.success(
+          'Email change request link sended to your new email id.'
+        );
         this.router.navigate(['dashboard']);
-      }
-
-      switch (res.error) {
-        case 'auth/requires-recent-login':
-          await this.authService.logOut();
-          this.router.navigate(['']);
-          break;
-        case 'auth/wrong-password':
-          this.alertService.error('Password is not correct!!');
-          break;
-        case 'auth/user-mismatch':
-          this.router.navigate(['']);
-          break;
-        default:
-          console.log(res.error);
-          break;
       }
     }
   }
