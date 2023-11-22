@@ -22,7 +22,6 @@ export class ChangeEmailComponent {
   ) {
     this.token = this.route.snapshot.queryParams['token'];
     this.userId = this.route.snapshot.queryParams['userId'];
-    console.log(this.token, this.userId);
 
     if (!(this.token && this.userId)) {
       this.alertService.error(

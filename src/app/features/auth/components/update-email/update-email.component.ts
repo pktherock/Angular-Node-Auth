@@ -29,7 +29,6 @@ export class UpdateEmailComponent implements OnInit {
     const { email } = this.updateEmailForm.value;
     if (email) {
       const res = await this.authService.verifyAndUpdateEmail(email);
-      console.log(res);
       if (typeof res === 'object') {
         this.alertService.success(
           'Email change request link sended to your new email id.'

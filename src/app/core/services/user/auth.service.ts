@@ -120,8 +120,6 @@ export class AuthService {
   }
 
   async verifyAccount(token: string, userId: string) {
-    console.log(userId, token);
-
     try {
       const response = await lastValueFrom(
         this.http.post<ApiResponse>(`/api/v1/auth/verify-user/${userId}`, {
@@ -144,7 +142,7 @@ export class AuthService {
           email: newEmail,
         })
       );
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error: any) {
       console.log('HTTP Error:', error);
@@ -160,7 +158,7 @@ export class AuthService {
           userId,
         })
       );
-      console.log(response);
+      // console.log(response);
       this.userInfo = null;
       return response.data;
     } catch (error: any) {
@@ -177,7 +175,7 @@ export class AuthService {
           newPassword,
         })
       );
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error: any) {
       console.log('HTTP Error:', error);
@@ -192,7 +190,7 @@ export class AuthService {
           email,
         })
       );
-      console.log(response);
+      // console.log(response);
 
       return response.success;
     } catch (error: any) {
@@ -208,7 +206,7 @@ export class AuthService {
           `/api/v1/auth/token-validate?token=${token}&userId=${userId}`
         )
       );
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error: any) {
       console.log('HTTP Error:', error);
@@ -231,7 +229,7 @@ export class AuthService {
           password,
         })
       );
-      console.log(response);
+      // console.log(response);
       return response.data as null;
     } catch (error: any) {
       console.log('HTTP Error:', error);
@@ -247,7 +245,7 @@ export class AuthService {
         })
       );
       this.userInfo = null;
-      console.log(response);
+      // console.log(response);
       return response.data;
     } catch (error: any) {
       console.log('HTTP Error:', error);
@@ -261,7 +259,7 @@ export class AuthService {
         this.http.post<ApiResponse>('/api/v1/auth/logout', {}) // todo without body send post request
       );
       this.userInfo = null;
-      console.log(response);
+      // console.log(response);
       return response;
     } catch (error: any) {
       console.log('HTTP Error:', error);

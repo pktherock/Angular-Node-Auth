@@ -42,7 +42,6 @@ export class SignUpComponent implements OnInit {
         this.router.navigate(['/auth/login']);
       }
 
-      console.log(response);
     } else {
       this.alertService.error(
         'username, email is required, and password and confirm password should match!'

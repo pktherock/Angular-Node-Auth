@@ -74,8 +74,6 @@ export class SetPasswordComponent {
         password
       );
 
-      console.log(response);
-
       if (response === null) {
         this.alertService.success(
           'Password reset successful, please login with your new password.'

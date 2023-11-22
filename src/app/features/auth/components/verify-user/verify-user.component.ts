@@ -48,14 +48,10 @@ export class VerifyUserComponent {
   }
 
   async onVerifyAccountBtnClick() {
-    console.log('I am verify account function');
-
     const response = await this.authService.verifyAccount(
       this.token,
       this.userId
     );
-    console.log(response);
-
     if (typeof response === 'object') {
       if (response.userInfo.verified) {
         this.alertService.success('Account verified successfully');

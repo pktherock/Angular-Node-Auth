@@ -29,7 +29,6 @@ export class DeleteUserComponent implements OnInit {
     const { password } = this.deleteUserForm.value;
     if (password) {
       const res = await this.authService.deleteUserFromDB(password);
-      console.log(res);
       if (typeof res === "object") {
         this.alertService.success('User has been DELETED successfully');
         this.router.navigate(['auth/login']);
