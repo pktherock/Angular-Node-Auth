@@ -76,15 +76,13 @@ export class AuthService {
     try {
       const response = await lastValueFrom(
         this.http.post<ApiResponse>('/api/v1/auth/register', {
-          body: {
-            userName,
-            email,
-            password,
-          },
+          userName,
+          email,
+          password,
         })
       );
       // console.log(response);
-      return response;
+      return response.data;
     } catch (error: any) {
       console.log('HTTP Error:', error);
       return error.message;

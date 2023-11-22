@@ -37,8 +37,12 @@ export class SignUpComponent implements OnInit {
     if (password === confirmNewPassword && email && userName) {
       const response = await this.authService.signUp(userName, email, password);
 
+      if (typeof response === 'object') {
+        this.alertService.success('Registered successfully.');
+        this.router.navigate(['/auth/login']);
+      }
+
       console.log(response);
-      // todo
     } else {
       this.alertService.error(
         'username, email is required, and password and confirm password should match!'
