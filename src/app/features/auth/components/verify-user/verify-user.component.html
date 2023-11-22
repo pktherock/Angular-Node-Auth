@@ -1,1 +1,28 @@
-<p>verify-user works!</p>
+<app-container>
+  <app-card>
+    <mat-card-title>Verify Account</mat-card-title>
+    <mat-card-content>
+      <div *ngIf="loading">
+        <p>Loading...</p>
+      </div>
+      <div *ngIf="!loading">
+        <div class="button" *ngIf="!isVerified">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="onVerifyAccountBtnClick()"
+          >
+            Verify Account
+          </button>
+        </div>
+
+        <div *ngIf="isVerified">
+          <p>Account already verified please login to continue</p>
+          <button mat-raised-button color="primary" routerLink="/auth/login">
+            Login
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </app-card>
+</app-container>

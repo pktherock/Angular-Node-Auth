@@ -7,8 +7,8 @@ import { Router } from '@angular/router';
 import ApiResponse from 'src/app/utils/ApiResponse';
 
 type User = {
-  accessToken: string;
-  refreshToken: string;
+  accessToken?: string;
+  refreshToken?: string;
   userInfo: {
     userName: string;
     email: string;
@@ -85,6 +85,20 @@ export class AuthService {
     }
   }
 
+  async getUserVerificationStatus(userId: string) {
+    
+    try {
+      const response = await lastValueFrom(
+        this.http.get<ApiResponse>(`/api/v1/auth/verify-user/${userId}`)
+      );
+      // console.log(response);
+      return response.data as { isVerified: boolean };
+    } catch (error: any) {
+      console.log('HTTP Error:', error);
+      return error.message as string;
+    }
+  }
+
   // Function to login with email and password
   async logInWithEmailAndPassword(email: string, password: string) {
     try {
@@ -96,6 +110,23 @@ export class AuthService {
       );
       this.userInfo = response.data as User;
       return response;
+    } catch (error: any) {
+      console.log('HTTP Error:', error);
+      return error.message as string;
+    }
+  }
+
+  async verifyAccount(token: string, userId: string) {
+    console.log(userId, token);
+    
+    try {
+      const response = await lastValueFrom(
+        this.http.post<ApiResponse>(`/api/v1/auth/verify-user/${userId}`, {
+          token,
+        })
+      );
+      // console.log(response);
+      return response.data as User;
     } catch (error: any) {
       console.log('HTTP Error:', error);
       return error.message as string;
