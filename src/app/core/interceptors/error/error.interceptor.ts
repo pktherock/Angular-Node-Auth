@@ -7,23 +7,27 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, finalize } from 'rxjs/operators';
 import { AlertService } from '../../services/alert/alert.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/user/auth.service';
+import { SpinnerService } from '../../services/spinner/spinner.service';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private alertService: AlertService,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private spinnerService: SpinnerService
   ) {}
 
   intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
+    this.spinnerService.showSpinner(); // Show spinner when request starts
+
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         // Handle specific error codes or different types of errors here
@@ -44,8 +48,15 @@ export class ErrorInterceptor implements HttpInterceptor {
           console.error('HTTP Error:', error);
         }
 
+        // Hide the spinner after handling the error
+        this.spinnerService.hideSpinner();
+
         // Return a user-friendly error message
         return throwError(() => new Error(error.error.message));
+      }),
+      finalize(() => {
+        // Hide the spinner when request completes (whether successful or with an error)
+        this.spinnerService.hideSpinner();
       })
     );
   }
