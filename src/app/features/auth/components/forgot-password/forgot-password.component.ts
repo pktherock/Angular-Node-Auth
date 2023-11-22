@@ -30,20 +30,11 @@ export class ForgotPasswordComponent implements OnInit {
     if (email) {
       const res = await this.authService.sendResetPasswordLinkToEmail(email);
       console.log(res);
-      if (res.success) {
+      if (res === true) {
         this.alertService.success(
           'Reset Password Link sended to you registered email id'
         );
         this.router.navigate(['auth/login']);
-      }
-
-      switch (res.error) {
-        case 'auth/user-not-found':
-          this.alertService.error('email is not correct!!');
-          break;
-        default:
-          console.log(res.error);
-          break;
       }
     }
   }

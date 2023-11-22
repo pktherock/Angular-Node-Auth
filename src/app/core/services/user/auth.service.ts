@@ -179,15 +179,57 @@ export class AuthService {
     }
   }
 
-  async sendResetPasswordLinkToEmail(
-    email: string
-  ): Promise<{ success: boolean; error?: string }> {
+  async sendResetPasswordLinkToEmail(email: string) {
     try {
-      //  todo
-      return { success: true };
+      const response = await lastValueFrom(
+        this.http.post<ApiResponse>('/api/v1/auth/request-reset-password', {
+          email,
+        })
+      );
+      console.log(response);
+
+      return response.success;
     } catch (error: any) {
-      console.log(error);
-      return { success: false, error: error.code };
+      console.log('HTTP Error:', error);
+      return error.message as string;
+    }
+  }
+
+  async getTokenValidity(token: string, userId: string) {
+    try {
+      const response = await lastValueFrom(
+        this.http.get<ApiResponse>(
+          `/api/v1/auth/token-validate?token=${token}&userId=${userId}`
+        )
+      );
+      console.log(response);
+      return response.data;
+    } catch (error: any) {
+      console.log('HTTP Error:', error);
+      return error.message as string;
+    }
+  }
+
+  async setPassword(
+    token: string,
+    userId: string,
+    otp: string,
+    password: string
+  ) {
+    try {
+      const response = await lastValueFrom(
+        this.http.post<ApiResponse>('/api/v1/auth/reset-password', {
+          token,
+          userId,
+          otp,
+          password,
+        })
+      );
+      console.log(response);
+      return response.data as null;
+    } catch (error: any) {
+      console.log('HTTP Error:', error);
+      return error.message as string;
     }
   }
 
@@ -207,7 +249,7 @@ export class AuthService {
   async logOut() {
     try {
       const response = await lastValueFrom(
-        this.http.post('/api/v1/auth/logout', {}) // todo without body send post request
+        this.http.post<ApiResponse>('/api/v1/auth/logout', {}) // todo without body send post request
       );
       this.userInfo = null;
       console.log(response);

@@ -8,6 +8,7 @@ import { UpdatePasswordComponent } from './components/update-password/update-pas
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { DeleteUserComponent } from './components/delete-user/delete-user.component';
 import { VerifyUserComponent } from './components/verify-user/verify-user.component';
+import { SetPasswordComponent } from './components/set-password/set-password.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'forgot-password',
     component: ForgotPasswordComponent,
+  },
+  {
+    path: 'password-reset',
+    component: SetPasswordComponent,
   },
   {
     path: 'update-email',
