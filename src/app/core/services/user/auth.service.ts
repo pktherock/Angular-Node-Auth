@@ -38,6 +38,10 @@ export class AuthService {
     this.userInfo = null;
   }
 
+  setUserOnUnauthorizedAccess() {
+    this.userInfo = null;
+  }
+
   // this function will run before application starts and ready to use
   Init() {
     return new Promise<void>(async (resolve, reject) => {
@@ -72,9 +76,11 @@ export class AuthService {
     try {
       const response = await lastValueFrom(
         this.http.post<ApiResponse>('/api/v1/auth/register', {
-          userName,
-          email,
-          password,
+          body: {
+            userName,
+            email,
+            password,
+          },
         })
       );
       // console.log(response);
@@ -235,15 +241,19 @@ export class AuthService {
     }
   }
 
-  async deleteUserFromDB(
-    currentPassword: string
-  ): Promise<{ success: boolean; error?: string }> {
+  async deleteUserFromDB(currentPassword: string) {
     try {
-      // todo
-      return { success: true };
+      const response = await lastValueFrom(
+        this.http.delete<ApiResponse>('/api/v1/auth/delete-user', {
+          body: { password: currentPassword },
+        })
+      );
+      this.userInfo = null;
+      console.log(response);
+      return response.data;
     } catch (error: any) {
-      console.log(error);
-      return { success: false, error: error.code };
+      console.log('HTTP Error:', error);
+      return error.message as string;
     }
   }
 

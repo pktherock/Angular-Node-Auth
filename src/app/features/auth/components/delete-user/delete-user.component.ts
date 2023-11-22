@@ -30,23 +30,9 @@ export class DeleteUserComponent implements OnInit {
     if (password) {
       const res = await this.authService.deleteUserFromDB(password);
       console.log(res);
-      if (res.success) {
+      if (typeof res === "object") {
         this.alertService.success('User has been DELETED successfully');
         this.router.navigate(['auth/login']);
-      }
-
-      switch (
-        res.error // todo
-      ) {
-        case 'auth/user-not-found':
-          this.alertService.error('email is not correct!!');
-          break;
-        case 'auth/wrong-password':
-          this.alertService.error('Incorrect password');
-          break;
-        default:
-          console.log(res.error);
-          break;
       }
     }
   }
