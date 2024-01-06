@@ -18,7 +18,7 @@ export class AlertService {
     this._snackBar.open(message, 'X', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration: 20000,
+      duration: 2000,
       panelClass: ['success-snackbar'],
     });
   }
@@ -27,7 +27,7 @@ export class AlertService {
     this._snackBar.open(message, 'X', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration: 20000,
+      duration: 2000,
       panelClass: ['error-snackbar'],
     });
   }
